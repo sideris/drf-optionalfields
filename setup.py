@@ -15,8 +15,8 @@ with open("README.rst") as f:
 
 setup(
     name="drf-optionalfields",
-    version="1.0.0",
-    description="Get fields only when you need them",
+    version="0.9.13",
+    description="Fine tuning for serialized fields",
     long_description=long_description,
     packages=["drf_optionalfields"],
     author="Petros G. Sideris",

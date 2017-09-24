@@ -9,7 +9,11 @@ class OptionalFieldsMixin(object):
                 return
         except (AttributeError, TypeError, KeyError):
             return
-        query_params = getattr(request, "QUERY_PARAMS", request.GET) if not not hasattr(request, "query_params") else request.query_params
+        try:
+            query_params = request.QUERY_PARAMS
+        except NotImplementedError:
+            query_params = request.query_params
+
         fields = query_params.get(self.exclude_argument)
         if hasattr(self.Meta, "optional_fields"):
             optionals = list(self.Meta.optional_fields)
@@ -28,9 +32,18 @@ class DynamicFilterMixin(object):
     include_argument = "filter"
 
     def __init__(self, *args, **kwargs):
-        fields = kwargs.pop(self.include_argument, None)
         super(DynamicFilterMixin, self).__init__(*args, **kwargs)
-
+        try:
+            request = self.context["request"]
+            if request.method != "GET":
+                return
+        except (AttributeError, TypeError, KeyError):
+            return
+        try:
+            query_params = request.QUERY_PARAMS
+        except NotImplementedError:
+            query_params = request.query_params
+        fields = query_params.get(self.include_argument).split(",")
         if fields is not None:
             allowed = set(fields)
             existing = set(self.fields.keys())

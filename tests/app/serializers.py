@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from drf_queryfields import QueryFieldsMixin
+from drf_optionalfields import QueryFieldsMixin
 from tests.app.fields import BoomField
 from tests.app.models import Snippet
 

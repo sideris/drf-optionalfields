@@ -43,9 +43,9 @@ class DynamicFilterMixin(object):
             query_params = request.QUERY_PARAMS
         except NotImplementedError:
             query_params = request.query_params
-        fields = query_params.get(self.include_argument).split(",")
-        if fields is not None:
-            allowed = set(fields)
+        fields = query_params.get(self.include_argument)
+        if fields:
+            allowed = set(fields.split(","))
             existing = set(self.fields.keys())
             for field_name in existing - allowed:
                 self.fields.pop(field_name)

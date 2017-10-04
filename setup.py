@@ -15,7 +15,7 @@ with open("README.rst") as f:
 
 setup(
     name="drf-optionalfields",
-    version="0.9.14",
+    version="0.9.15",
     description="Fine tuning for serialized fields",
     long_description=long_description,
     packages=["drf_optionalfields"],

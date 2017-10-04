@@ -1,25 +1,14 @@
 from rest_framework import serializers
 
-from drf_optionalfields import QueryFieldsMixin
-from tests.app.fields import BoomField
+from drf_optionalfields import OptionalFieldsMixin, DynamicFilterMixin
 from tests.app.models import Snippet
 
 
-class QuoteSerializer(QueryFieldsMixin, serializers.Serializer):
-
-    character = serializers.CharField()
-    line = serializers.CharField()
-    sketch = serializers.CharField()
-
-
-class SnippetSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+class SnippetSerializer(OptionalFieldsMixin, DynamicFilterMixin, serializers.ModelSerializer):
 
     class Meta:
         model = Snippet
-        exclude = ()
+        fields = "__all__"
+        optional_fields = ("code", )
 
 
-class ExplosiveSerializer(QueryFieldsMixin, serializers.Serializer):
-
-    safe = serializers.CharField()
-    boom = BoomField()
